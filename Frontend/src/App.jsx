@@ -1,13 +1,24 @@
 import React from 'react'
-import { Button } from "@/components/ui/button"
+import { BrowserRouter } from 'react-router-dom'
+import SignInForm from './auth/forms/SignInForm'
+import SignUpForm from './auth/forms/SignUpForm'
+import About from './pages/About'
+import Dashboard from './pages/Dashboard'
+import NewsArticles from './pages/NewsArticles'
  
 const App = () => {
   return (
-    <div>
-      <div className="flex min-h-svh flex-col items-center justify-center">
-      <Button>Click me</Button>
-    </div>
-    </div>
+   <BrowserRouter>
+   <Routes>
+    <Route path="/sign-in" element={<SignInForm/>}/>
+    <Route path="/sign-up" element={<SignUpForm/>}/>
+
+    <Route path="/"  element={<Home/>}/>
+    <Route path="/about" element={<About/>} />
+    <Route path="/dashboard" element={<Dashboard/>}/>
+    <Route path="/news" element={<NewsArticles/>}/>
+   </Routes>
+   </BrowserRouter>
   )
 }
 
