@@ -5,6 +5,8 @@ import SignUpForm from './auth/forms/SignUpForm'
 import About from './pages/About'
 import Dashboard from './pages/Dashboard'
 import NewsArticles from './pages/NewsArticles'
+import { Routes,Route } from 'react-router-dom'
+import Home from './pages/Home'
  
 const App = () => {
   return (
