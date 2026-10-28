@@ -5,6 +5,7 @@ import { errorHandler } from '../utils/error.js'
 export const signUp = async(req,res, next)=>{
 
     const{userName, password, email} = req.body || {}
+    console.log(req.body)
 
     if(!userName || !password || !email || userName==="" || password==="" || email==="" ){
         return next(errorHandler(400,"All fields are required"))

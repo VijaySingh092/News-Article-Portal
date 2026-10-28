@@ -1,8 +1,9 @@
 
 import * as React from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import { toast } from "sonner"
 import * as z from "zod"
 
@@ -24,10 +25,10 @@ import {
 import { Input } from "@/components/ui/input"
 
 const formSchema = z.object({
-  username: z
+  userName: z
     .string()
-    .min(3, "Username must be at least 3 characters.")
-    .max(20, "Username must be at most 20 characters."),
+    .min(3, "userName must be at least 3 characters.")
+    .max(20, "userName must be at most 20 characters."),
 
   email: z
     .string()
@@ -39,22 +40,54 @@ const formSchema = z.object({
 })
 
 export function BugReportForm() {
+
+  const navigate = useNavigate()
+  const[loading, setLoading] = useState(false)
+  const[errorMessage, setErrorMessage] = useState(null)
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      userName: "",
       email: "",
       password: "",
     },
   })
 
-  function onSubmit(data) {
-    toast.success("Signup form submitted!", {
-      description: `Username: ${data.username}`,
-      position: "bottom-right",
-    })
 
-    console.log(data)
+  // define submit handler
+  async function onSubmit(values) {
+    try{
+      setLoading(true)
+      setErrorMessage(null)
+      
+      const res = await fetch('/api/auth/signup',{
+        method:"POST",
+        headers:{"Content-Type" : "application/json"},
+        body: JSON.stringify(values),
+      })
+
+      const data = await res.json()
+
+       if (!res.ok || data.success === false) {
+        const message =
+          typeof data.message === "string"
+            ? data.message
+            : "Sign up failed! Please try again."
+
+         setErrorMessage(message)
+        toast.error(message)
+        return 
+      }
+      
+        toast.success("Sign up successful!")
+        navigate("/sign-in")
+      
+    }catch(error){
+      setErrorMessage(error.message)
+      toast.error("Something went wrong!")
+    }finally{
+      setLoading(false)
+    }
   }
 
   function handleGoogleSignup() {
@@ -81,18 +114,18 @@ export function BugReportForm() {
         >
           <FieldGroup>
             <Controller
-              name="username"
+              name="userName"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="signup-username">
-                    Username
+                  <FieldLabel htmlFor="signup-userName">
+                    userName
                   </FieldLabel>
 
                   <Input
                     {...field}
-                    id="signup-username"
-                    placeholder="Enter your username"
+                    id="signup-userName"
+                    placeholder="Enter your userName"
                     autoComplete="username"
                     aria-invalid={fieldState.invalid}
                   />
@@ -160,10 +193,15 @@ export function BugReportForm() {
       <CardFooter className="flex flex-col gap-3">
         <Button
           type="submit"
+          disabled={loading}
           form="signup-form"
           className="w-full bg-blue-500 text-white hover:bg-green-700"
         >
-          Submit
+          {loading ? (
+            <span className="animate-pulse">Loading...</span>
+          ):(
+            <span>Sign Up</span>
+          )}
         </Button>
 
         <Button
@@ -203,6 +241,7 @@ export function BugReportForm() {
         <span>Have an account?</span>
         <Link to="/sign-in" className="text-blue-500">Sign In</Link>
       </div>
+      {errorMessage && <p className="mt-5 text-red-500">{errorMessage}</p>}
     </>
   )
 }
