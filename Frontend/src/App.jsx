@@ -9,6 +9,7 @@ import { Routes,Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Header from './components/shared/Header'
 import { Toaster } from "sonner";
+import Footer from './components/shared/Footer'
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
     <Route path="/dashboard" element={<Dashboard/>}/>
     <Route path="/news" element={<NewsArticles/>}/>
    </Routes>
+   <Footer/>
     <Toaster />
    </BrowserRouter>
   )
