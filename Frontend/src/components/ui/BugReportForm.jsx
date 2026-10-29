@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form"
 import {Link, useNavigate} from "react-router-dom"
 import { toast } from "sonner"
 import * as z from "zod"
+import GoogleAuth from "../shared/GoogleAuth"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -204,7 +205,7 @@ export function BugReportForm() {
           )}
         </Button>
 
-        <Button
+        {/* <Button
           type="button"
           onClick={handleGoogleSignup}
           className="w-full bg-green-600 text-white hover:bg-green-700"
@@ -233,7 +234,9 @@ export function BugReportForm() {
             />
           </svg>
           Continue with Google
-        </Button>
+        </Button> */}
+
+        <GoogleAuth/>
       </CardFooter>
       
     </Card>
