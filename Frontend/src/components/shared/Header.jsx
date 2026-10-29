@@ -68,12 +68,14 @@ const Header = () => {
 
       <DropdownMenuSeparator className='bg-gray-400'/>
       
-      <DropdownMenuItem className="block font-semibold text-sm">
-        <div className='flex flex-col gap-1'>
+      <DropdownMenuItem asChild>
+        <Link to='/dashboard?tab=profile'  className=" font-semibold text-sm flex flex-col gap-1">
+        
             <span>@{currentUser.userName}</span>
             <span>@{currentUser.email}</span>
-        </div>
+       </Link>
       </DropdownMenuItem>
+
       <DropdownMenuItem className="block font-semibold mt-2">
         <Link to="/dashboard?tab=profile">Profile</Link>
         </DropdownMenuItem>

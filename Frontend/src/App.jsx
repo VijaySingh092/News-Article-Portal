@@ -10,6 +10,7 @@ import Home from './pages/Home'
 import Header from './components/shared/Header'
 import { Toaster } from "sonner";
 import Footer from './components/shared/Footer'
+import PrivateRoute from './components/shared/PrivateRoute'
 
 const App = () => {
   return (
@@ -21,7 +22,11 @@ const App = () => {
 
     <Route path="/"  element={<Home/>}/>
     <Route path="/about" element={<About/>} />
+
+<Route element={<PrivateRoute/>}>
     <Route path="/dashboard" element={<Dashboard/>}/>
+</Route>
+
     <Route path="/news" element={<NewsArticles/>}/>
    </Routes>
    <Footer/>
