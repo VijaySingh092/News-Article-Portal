@@ -15,7 +15,7 @@ const DashboardSidebar = () => {
         <ul className='space-y-4'>
             <li>
                 <Link 
-                to={"dashboard?tab=profile"} 
+                to="/dashboard?tab=profile"
                 className='flex items-center p-2 hover:bg-slate-300 rounded'>
                 <FaUser className='mr-3'/>
                 <span>Profile</span>
